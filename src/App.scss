@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+
+.main{ 
+  display: grid;
+  grid-template-columns: 25% auto;
+ }
+@media(max-width: 600px){
+  .main{
+    grid-template-columns: none !important;
+  }
+}

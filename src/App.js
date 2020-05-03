@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import ProfileInfo from './components/ProfileInfos/ProfileInfos'
+import WorkInfo from './components/WorkInfo/WorkInfo'
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      profile: [],
+      isLoading: true
+    }
+  }
+
+  componentDidMount() {
+    fetch('http://www.mocky.io/v2/5a5e38f3330000b0261923a5')
+      .then(res => res.json())
+      .then(data => this.setState({
+        profile: data.profile,
+        isLoading: false,
+      },
+        () => console.warn(data.profile)
+      ))
+  }
+  render() {
+    const { isLoading, profile } = this.state
+    if(isLoading){ 
+    return(
+      <div>
+        Loading...
+      </div>
+    )
+   }
+     return (
+      <div className='main'>
+        <ProfileInfo profile={profile}/>
+        <WorkInfo profile={profile}/>
+      </div>
+    )
+  }
 }
 
 export default App;
